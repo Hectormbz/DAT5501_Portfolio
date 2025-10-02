@@ -5,5 +5,4 @@ def CIC(savings, rate, years):
         savings = savings * rate
         print(savings)
     print(math.log(2, rate))
-
 CIC(100, 5, 8)
