@@ -13,4 +13,4 @@ while b < numDays:
         if b == numDays:
             sys.exit()
         b = b + 1
-        print(0+b, " ", end = ' ')
+        print(b, " ", end = ' ')
