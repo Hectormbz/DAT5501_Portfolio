@@ -25,11 +25,36 @@ newData["RelativeChange(%)"] = ((newData["num2024"] - newData["num1990"]) / newD
 
 colours = ["blue" if c != "United Kingdom" else "red" for c in newData["Entity"]]
 
-plt.bar(newData["Entity"], newData["RelativeChange(%)"], color = colours)
+#plt.bar(newData["Entity"], newData["RelativeChange(%)"], color = colours)
 plt.xlabel("Country")
 plt.ylabel("Relative change 1990 - 2024 (%)")
 plt.title("Relative change in immigrants living in each country")
-plt.xticks(rotation=45, ha = "right")
-plt.show()
+
 
 #filtering for countries 
+
+Countries = ["Chile", "Turkey", "Hungary", "United Kingdom", "Poland", "France", "South Korea", "Germany", "India", "Canada", "Australia", "United States", "Netherlands", "Belgium", "Spain", "Sweden", "Italy", "South Africa", "Singapore", "Japan", "Malaysia", "Colombia", "Peru", "Brazil", "Thailand", "Indonesia"]
+filtered = newData[newData["Entity"].isin(Countries)]
+
+#sort by relative change
+
+filtered = filtered.sort_values("RelativeChange(%)", ascending = True)
+
+#Plot filtered chart
+
+concernedCountries = ["Chile", "Turkey", "Hungary"]
+filteredColours = []
+for c in filtered["Entity"]:
+    if c == "United Kingdom":
+        filteredColours.append("red")
+    elif c in concernedCountries:
+        filteredColours.append("orange")
+    else:
+        filteredColours.append("Blue")
+        
+plt.bar(filtered["Entity"], filtered["RelativeChange(%)"], color = filteredColours)
+plt.xlabel("Country")
+plt.ylabel("Relative change 1990 - 2024 (%)")
+plt.title("Relative change in immigrants living in each country")
+plt.xticks(rotation = 40, ha = "right")
+plt.show()
