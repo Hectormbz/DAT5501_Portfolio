@@ -1,6 +1,6 @@
 import pandas as pd
 import numpy as np
-import matplotlib as plt
+import matplotlib.pyplot as plt
 
 #Calculating relative change from 1990-2024:
 
@@ -20,4 +20,16 @@ newData = pd.merge(df1990, df2024, on="Entity")
 #Calculate relative increase
 
 newData["RelativeChange(%)"] = ((newData["num2024"] - newData["num1990"]) / newData["num1990"]) * 100
-print(newData)
+
+#Draw graph for every country
+
+colours = ["blue" if c != "United Kingdom" else "red" for c in newData["Entity"]]
+
+plt.bar(newData["Entity"], newData["RelativeChange(%)"], color = colours)
+plt.xlabel("Country")
+plt.ylabel("Relative change 1990 - 2024 (%)")
+plt.title("Relative change in immigrants living in each country")
+plt.xticks(rotation=45, ha = "right")
+plt.show()
+
+#filtering for countries 
