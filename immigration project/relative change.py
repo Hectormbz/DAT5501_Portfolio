@@ -25,11 +25,11 @@ newData["RelativeChange(%)"] = ((newData["num2024"] - newData["num1990"]) / newD
 
 colours = ["blue" if c != "United Kingdom" else "red" for c in newData["Entity"]]
 
-#plt.bar(newData["Entity"], newData["RelativeChange(%)"], color = colours)
+plt.bar(newData["Entity"], newData["RelativeChange(%)"], color = colours)
 plt.xlabel("Country")
 plt.ylabel("Relative change 1990 - 2024 (%)")
 plt.title("Relative change in immigrants living in each country")
-
+plt.show()
 
 #filtering for countries 
 
@@ -57,4 +57,3 @@ plt.xlabel("Country")
 plt.ylabel("Relative change 1990 - 2024 (%)")
 plt.title("Relative change in immigrants living in each country")
 plt.xticks(rotation = 40, ha = "right")
-plt.show()
