@@ -11,17 +11,16 @@ def plotClosingPriceVsDate(filePath):
     # Ensure 'Close/Last' is float
     df['Close/Last'] = df['Close/Last'].str.replace('$','').astype(float)
 
-    # Plot Closing price against Date
-    plt.figure(figsize=(10, 6))
-    plt.plot(df['Date'], df['Close/Last'])
-
-    # Format the plot
-    plt.title('Closing Price vs Date')
+     # Calculate the daily percentage change
+    df['Daily Change (%)'] = df['Close/Last'].pct_change() * 100
+ 
+    # Plot Daily Change percentage against Date
+    plt.plot(df['Date'], df['Daily Change (%)'])
+    plt.title('Daily Percentage Change vs Date')
     plt.xlabel('Date')
-    plt.ylabel('Closing Price ($)')
+    plt.ylabel('Daily Change (%)')
     plt.grid(True)
-    plt.xticks(rotation=45)  
-
+    plt.xticks(rotation=45)
     
     # Show the plot
     plt.tight_layout() 
