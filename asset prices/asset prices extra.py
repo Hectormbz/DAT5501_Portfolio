@@ -13,7 +13,13 @@ def plotClosingPriceVsDate(filePath):
 
      # Calculate the daily percentage change
     df['Daily Change (%)'] = df['Close/Last'].pct_change() * 100
- 
+
+    # Calculate the standard deviation
+    stDev = df['Daily Change (%)'].std()
+
+    print("Standard deviation of the daily percentage change: ", stDev)
+
+
     # Plot Daily Change percentage against Date
     plt.plot(df['Date'], df['Daily Change (%)'])
     plt.title('Daily Percentage Change vs Date')
