@@ -5,7 +5,7 @@ import matplotlib.pyplot as plt
 #Calculating relative change from 1990-2024:
 
 
-df = pd.read_csv("total-number-of-international-immigrants.csv")
+df = pd.read_csv(r"C:\Users\hbuzzacott001\OneDrive - PwC\Uni work\YR2\DAT5501_Portfolio\immigration project\total-number-of-international-immigrants.csv")
 numImmigrants = "Total number of international immigrants"
 
 #get values for each year:
