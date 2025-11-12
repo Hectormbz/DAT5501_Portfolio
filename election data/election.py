@@ -24,3 +24,19 @@ plt.ylabel("Number of States")
 plt.grid(True, alpha=0.3)
 plt.show()
 
+#not sure what the histogram shows so here is a bar chart that shows each state
+
+# Plot bar chart
+plt.figure(figsize=(12, 6))
+vote_fraction.plot(kind='bar', color='skyblue', edgecolor='black')
+
+# Format the plot
+plt.title(f"Fraction of Votes for {candidateName} by State")
+plt.xlabel("State")
+plt.ylabel("Fraction of Votes")
+plt.xticks(rotation=45)
+plt.grid(axis='y', alpha=0.4)
+
+# Show the plot
+plt.tight_layout()
+plt.show()
