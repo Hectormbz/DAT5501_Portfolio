@@ -12,19 +12,18 @@ df = pd.read_csv(csv_path)
 df['Close/Last'] = df['Close/Last'].str.replace('$','').astype(float)
 #creates list of daily price changes
 dailyChanges = df['Close/Last'].diff().dropna().to_numpy()
-
+print(dailyChanges)
 # n values to test sorting time
 ns = np.arange(7, 366)
 # Time the sorting
 times = []
 for n in ns:
     sample = dailyChanges[:n].astype(float)  # view of first n daily changes
-    np.sort(sample)  # Warm-up sort, not timed
-    repeats = 20  # Number of times to repeat the process for averaging
+    sample = np.array(sample) #make sample numpy array
     t0 = perf_counter()
-    for i in range(repeats):
-        np.sort(sample)
-    t = (perf_counter() - t0) / repeats
+    np.sort(sample)
+    t1 = perf_counter()
+    t = t1 - t0
     times.append(t)
 
 #make lists into numpy arrays
