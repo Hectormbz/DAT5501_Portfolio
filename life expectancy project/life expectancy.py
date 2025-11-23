@@ -29,6 +29,7 @@ plt.plot(totalYears, totalLifeExpectancy, 'o', label='Observed data')
 #fullYears = np.arange(1924, 2024)
 
 chiSquaredPerDoF = []
+BayesianIC = []
 
 #Fit polynomials of order 1 to 9
 for order in range(1, 10):
@@ -51,6 +52,9 @@ for order in range(1, 10):
     #Calculate chi-squared per degree of freedom
     chiSquaredPerDoF.append(chiSquared / dof)
 
+    #Calculate Bayesian Information Criterion
+    BayesianIC.append(chiSquared + (order + 1)*(np.log(90)))
+
 #add vertical line to indicate start of prediction
 plt.axvline(x=2014, color='red', linestyle='--', label='Start of Prediction')
 
@@ -68,5 +72,14 @@ plt.plot(range(1, 10), chiSquaredPerDoF, marker='o')
 plt.title('Chi-Squared per Degree of Freedom for Polynomial Orders')
 plt.xlabel('Polynomial Order')
 plt.ylabel('Chi-Squared per Degree of Freedom')
+plt.grid(True)
+plt.show()
+
+#Plot Bayesian Information Criterion
+plt.figure(figsize=(10, 6))
+plt.plot(range(1, 10), BayesianIC, marker='o')
+plt.title('Bayesian Information Criterion for Polynomial Orders')
+plt.xlabel('Polynomial Order')
+plt.ylabel('Bayesian Information Criterion')
 plt.grid(True)
 plt.show()
