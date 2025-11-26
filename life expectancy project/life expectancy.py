@@ -36,15 +36,16 @@ for order in range(1, 10):
     coeffs = np.polyfit(yearsTrain, lifeExpectancyTrain, order)
     poly = np.poly1d(coeffs)
     forecast = poly(totalYears)
+    lifeExpectancyModel = poly(yearsTrain)
     
     #Plot the polynomial forecast
     plt.plot(totalYears, forecast, label=f'Order {order} Forecast')
 
     #Calculate residuals
-    residuals = totalLifeExpectancy - forecast
+    residuals = lifeExpectancyTrain - lifeExpectancyModel
     
-    #Calculate chi-squared
-    chiSquared = np.sum((residuals ** 2) / np.var(lifeExpectancyTrain))
+    #Calculate chi-squared with estimated uncertainty
+    chiSquared = np.sum((residuals ** 2) / 0.5**2)
     
     #Calculate degrees of freedom
     dof = 90 - (order + 1)
@@ -58,7 +59,7 @@ for order in range(1, 10):
 #add vertical line to indicate start of prediction
 plt.axvline(x=2014, color='red', linestyle='--', label='Start of Prediction')
 
-#Finalize plot
+#plot life expectancy predictions
 plt.title('Life Expectancy Forecasts using Polynomials')
 plt.xlabel('Year')
 plt.ylabel('Life Expectancy')
@@ -80,6 +81,6 @@ plt.figure(figsize=(10, 6))
 plt.plot(range(1, 10), BayesianIC, marker='o')
 plt.title('Bayesian Information Criterion for Polynomial Orders')
 plt.xlabel('Polynomial Order')
-plt.ylabel('Bayesian Information Criterion')
+plt.ylabel('Bayesian Information Criterion') 
 plt.grid(True)
 plt.show()
