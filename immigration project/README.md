@@ -1,0 +1,1 @@
+This is code that produced my graphs from our immigration presentaion, it calculates the percentage change in immigrant numbers for each country from 1990 to 2024, and visualizes it using bar charts.
