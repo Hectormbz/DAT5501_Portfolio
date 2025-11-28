@@ -53,3 +53,60 @@ print("Mean absolute error:", mean_absolute_error(yTest, posPred))
 r2 = r2_score(yTest, posPred)
 print("R-squared:", r2)
 
+#Predicting probabilities of champion, top 4 and relegated
+
+#Use all-club data
+XAll = df[features]
+XAllScaled = scaler.fit_transform(XAll)
+
+yChamp = df["champion"]
+yTop4 = df["top4"]
+yReleg = df["relegated"]
+
+#Logistic regressions
+champModel = LogisticRegression(max_iter=500)
+top4Model = LogisticRegression(max_iter=500)
+relegModel = LogisticRegression(max_iter=500)
+
+champModel.fit(XAllScaled, yChamp)
+top4Model.fit(XAllScaled, yTop4)
+relegModel.fit(XAllScaled, yReleg)
+
+#Train a more powerful non-linear model too
+rf = RandomForestClassifier(n_estimators=300, random_state=42)
+rf.fit(XAll, yTop4)
+
+#Predict probabilities for the most recent Chelsea season
+latest = chelsea.iloc[-1:][features]
+latestScaled = scaler.transform(latest)
+
+probWin = champModel.predict_proba(latestScaled)[0][1]
+probTop4 = top4Model.predict_proba(latestScaled)[0][1]
+probReleg = relegModel.predict_proba(latestScaled)[0][1]
+probTop4rf = rf.predict_proba(latest)[0][1]
+
+print("\nProbability Forecast For Chelsea Next Season")
+print(f"Chance of WINNING the league:       {probWin:.2%}")
+print(f"Chance of FINISHING TOP 4:          {probTop4:.2%}  (logistic)")
+print(f"Chance of FINISHING TOP 4:          {probTop4rf:.2%}  (random forest)")
+print(f"Chance of RELEGATION:               {probReleg:.2%}")
+
+#Plot Chelsea finishing positions over time + predicted trend
+
+plt.figure(figsize=(10,6))
+plt.plot(chelsea["season_end_year"], chelsea["position"], marker="o", label="Actual Position")
+
+# Predict trend line
+XScaledAll = scaler.transform(X)
+trend = reg.predict(XScaledAll)
+plt.plot(chelsea["season_end_year"], trend, label="Predicted Trend", linestyle="--")
+
+plt.gca().invert_yaxis()  # 1 = best
+plt.title("Chelsea Finishing Position Over Time")
+plt.xlabel("Season")
+plt.ylabel("Position (1 = Champion)")
+plt.grid(True)
+plt.legend()
+plt.show()
+
+
